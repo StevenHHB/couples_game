@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
+</head>
+<body>
+<div class="profile-container">
+    <div class="game-history">
+        {% if couple and game_session_history %}
+        <h2>Game Session History</h2>
+        <table class="game-history-table">
+            <tr>
+                <th>Game Session</th>
+                <th>Your Clicks</th>
+                <th>{{other_user.username}}'s clicks</th>
+                <th>Game Result</th>
+            </tr>
+            {% for session in game_session_history %}
+                <tr>
+                    <td>{{ session.start_time }}</td>
+                    <td>
+                        {% if current_user == couple.user1 %}
+                            {{ session.click_count_user1 }}
+                        {% else %}
+                            {{ session.click_count_user2 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if current_user == couple.user1 %}
+                            {{ session.click_count_user2 }}
+                        {% else %}
+                            {{ session.click_count_user1 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if session.click_count_user1 > session.click_count_user2 %}
+                            {% if current_user == couple.user1 %}
+                                Won
+                            {% else %}
+                                Lost
+                            {% endif %}
+                        {% elif session.click_count_user1 < session.click_count_user2 %}
+                            {% if current_user == couple.user2 %}
+                                Won
+                            {% else %}
+                                Lost
+                            {% endif %}
+                        {% else %}
+                            Tied
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>  
+    <div class="game-section">
+        {% if couple %}
+        {% if current_game_session %}
+            <h2>Current Game Session</h2>
+            <p id="time-remaining">Time Remaining: <span id="countdown"></span></p>
+            <p>Your Click Count: {{ current_user.get_user_click_count() }}</p>
+            <input type="hidden" id="start-time" value="{{ current_game_session.start_time.isoformat() }}">
+            <form method="post" action="{{ url_for('click') }}">
+                <button type="submit" class="click-button">Click</button>
+            </form>
+        {% else %}
+            <h2>No Active Game Session</h2>
+            <form method="post" action="{{ url_for('start_game') }}">
+                <button type="submit" class="start-game-button">Start New Game</button>
+            </form>
+        {% endif %}
+        {% else %}
+            <h2>No Couple Found</h2>
+            <p>You are not currently in a couple. Join or create a couple to start playing the game.</p>
+        {% endif %}
+    </div>
+    <div class="profile-info">
+        <div class="profile-header">
+            <h1 class="fade-in">Profile</h1>
+        </div>
+        <p class="profile-details">Username: {{ user.username }}</p>
+        <p class="profile-details">Email: {{ user.email }}</p>
+        <a class="logout-link" href="{{ url_for('logout') }}">Logout</a>
+
+        {% if pending_requests %}
+        <div class="pending-requests">
+            <h2>Incoming Couple Requests</h2>
+            <ul>
+                {% for request in pending_requests %}
+                <li>
+                    <div class="request-container">
+                        <p class="request-message">{{ request.user1.username }} wants to be your couple.</p>
+                        <form method="post" action="{{ url_for('accept_request', couple_id=request.id) }}">
+                            <button type="submit" class="accept-request">Become Couple</button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Logic for showing couple or search link -->
+        {% if other_user %}
+        <!-- Display link to the couple's profile -->
+        <a class="couple-link" href="{{ url_for('couple_profile', other_user_id=other_user.id) }}">View Couple: {{ other_user.username }}'s Profile</a>
+        {% else %}
+        <!-- Display link to search for a significant other -->
+        <a class="couple-link" href="{{ url_for('search') }}">Search and Add Significant Other</a>
+        {% endif %}
+    </div>  
+</div>
+</body>
+</html>
+

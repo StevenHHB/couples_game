@@ -1,0 +1,14 @@
+<!-- couple_profile.html -->
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<div class="profile-container">
+    <div class="profile-header">
+        <h1 class="fade-in">Couple's Profile</h1>
+    </div>
+    <a class="logout-link" href="{{ url_for('logout') }}">Logout</a>
+    <p class="profile-details">Username: {{ partner.username }}</p>
+    <p class="profile-details">Email: {{ partner.email }}</p>
+    <!-- Add any other profile details you want to display -->
+
+    <a class="couple-link" href="{{ url_for('profile') }}">Back to Your Profile</a>
+</div>

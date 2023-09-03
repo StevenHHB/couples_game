@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Search for Users</title>
+</head>
+
+<body>
+    <input type="hidden" id="currentUserId" value="{{ user_id }}">
+    <a class="logout-link" href="{{ url_for('logout') }}">Logout</a>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for users...">
+        <button>Search</button>
+        <a class = 'couple-link' href = "{{ url_for('profile') }}">Back to Profile</a>
+    </div>
+    <div id="results"></div>
+
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+</body>
+
+</html>

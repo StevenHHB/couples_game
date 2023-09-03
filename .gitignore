@@ -1,0 +1,13 @@
+__pycache__
+# .gitignore
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Database file
+app.db
+
+# Flask-Migrate migrations
+/migrations/
+/app/__pycache__/
