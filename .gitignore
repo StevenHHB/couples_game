@@ -9,5 +9,4 @@ __pycache__/
 app.db
 
 # Flask-Migrate migrations
-/migrations/
 /app/__pycache__/
