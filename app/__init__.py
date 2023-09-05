@@ -3,12 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-# Assuming 'app' and 'db' are your Flask and SQLAlchemy instances respectively
-
-
 db = SQLAlchemy()
 login_manager = LoginManager()
-
 
 def create_app():
     app = Flask(__name__)
@@ -20,6 +16,5 @@ def create_app():
 
     with app.app_context():
         from . import routes, models  # Import routes after the app is created
-        db.create_all()  # Optionally, create all tables here
 
     return app
