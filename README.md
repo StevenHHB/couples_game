@@ -2,6 +2,9 @@
 
 The Couples Game Web Application is a fun and interactive platform where couples can play a game together and track their game sessions. This README provides an overview of the application, how to set it up locally, and deploy it to Heroku.
 
+
+currently live @ www.442479.com
+
 ## Table of Contents
 
 * [Features](https://chat.openai.com/c/d9ade333-9fa4-4fc8-800a-60571fe8a3d1#features)
